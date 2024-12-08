@@ -1,0 +1,49 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+*.suo
+*.ntvs*
+*.csproj.user
+*.sln.dotSettings
+
+# Editor files
+.vscode/
+
+# Package managers
+node_modules/
+package-lock.json
+yarn.lock
+poetry.lock # if using poetry
+
+# Build artifacts
+dist/
+build/
+out/
+coverage/
+.next/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Database files
+*.db
+*.sqlite
+*.sql # unless you want to version control your schema
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Temporary files
+*.log
+*.tmp
+*.bak
