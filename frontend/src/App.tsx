@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-// タスクの型を定義
+// Define the task type
 type Task = {
   id: number;
   task: string;

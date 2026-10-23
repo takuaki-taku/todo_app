@@ -7,17 +7,17 @@ from pydantic import BaseModel
 from .database import database, engine, metadata
 from .models import tasks
 
-# アプリケーション作成
+# Create the application
 app = FastAPI(title="Todo App API")
 
-# データベース初期化
+# Initialize the database tables
 metadata.create_all(engine)
 
-# CORSの設定（開発用フロントエンドのオリジンのみ許可）
+# CORS settings (only allow the local development frontend origins)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",  # Vite 既定ポート
+        "http://localhost:5173",  # default Vite port
         "http://localhost:3000",
     ],
     allow_credentials=True,
@@ -26,7 +26,7 @@ app.add_middleware(
 )
 
 
-# Pydanticモデル
+# Pydantic models
 class Task(BaseModel):
     id: int
     task: str
@@ -47,14 +47,14 @@ def read_root():
     return {"message": "Todo App API"}
 
 
-# タスク一覧を取得
+# List all tasks
 @app.get("/tasks", response_model=List[Task])
 async def get_tasks():
     query = tasks.select()
     return await database.fetch_all(query)
 
 
-# タスクを追加
+# Create a task
 @app.post("/tasks", response_model=Task)
 async def create_task(task: TaskCreate):
     query = tasks.insert().values(task=task.task, completed=False)
@@ -62,7 +62,7 @@ async def create_task(task: TaskCreate):
     return {"id": last_record_id, "task": task.task, "completed": False}
 
 
-# タスクを更新（完了フラグの切り替え・内容の変更）
+# Update a task (toggle completion, change contents, etc.)
 @app.put("/tasks/{task_id}", response_model=Task)
 async def update_task(task_id: int, task: TaskUpdate):
     values = {k: v for k, v in task.model_dump().items() if v is not None}
@@ -78,7 +78,7 @@ async def update_task(task_id: int, task: TaskUpdate):
     return dict(row)
 
 
-# タスクを削除
+# Delete a task
 @app.delete("/tasks/{task_id}", status_code=204)
 async def delete_task(task_id: int):
     query = tasks.delete().where(tasks.c.id == task_id)
@@ -88,7 +88,7 @@ async def delete_task(task_id: int):
     return
 
 
-# アプリケーション起動前後の処理
+# Startup / shutdown handlers
 @app.on_event("startup")
 async def startup():
     await database.connect()

@@ -1,51 +1,51 @@
 # Todo App
 
-React + TypeScript (Vite) のフロントエンドと FastAPI のバックエンドで構築した、学習用のシンプルな Todo アプリです。
+A simple Todo app built for learning purposes, using a React + TypeScript (Vite) frontend and a FastAPI backend.
 
-## 構成
+## Project structure
 
 ```
 todo_app/
 ├── backend/     # FastAPI + SQLAlchemy + MySQL
-│   ├── main.py        # APIエンドポイント
-│   ├── database.py    # DB接続（.env の DATABASE_URL を使用）
-│   ├── models.py      # tasks テーブル定義
+│   ├── main.py        # API endpoints
+│   ├── database.py    # Database connection (reads DATABASE_URL from the environment)
+│   ├── models.py      # tasks table definition
 │   └── requirements.txt
 ├── frontend/    # React + TypeScript (Vite)
-└── .env.example # 環境変数のサンプル
+└── .env.example # Sample environment variables
 ```
 
-## 機能
+## Features
 
-- タスクの追加 / 一覧表示 / 完了切り替え / 削除（CRUD）
+- Add tasks, list tasks, toggle completion, delete tasks (CRUD)
 
-## セットアップ
+## Getting started
 
-### 事前に必要なもの
+### Prerequisites
 
-- Python 3.8 以上
+- Python 3.8 or later
 - Node.js
-- MySQL（`todo_app` データベースを作成しておくこと）
+- MySQL (create the `todo_app` database first)
 
 ```sql
 CREATE DATABASE todo_app;
 ```
 
-### 1. 環境変数の設定
+### 1. Set up environment variables
 
 ```bash
 cp .env.example .env
-# .env を編集して自分の MySQL 接続情報を設定
+# Edit .env with your own MySQL connection details
 ```
 
-### 2. バックエンドの起動（http://localhost:8000）
+### 2. Start the backend (http://localhost:8000)
 
 ```bash
 pip install -r backend/requirements.txt
 uvicorn backend.main:app --reload --env-file .env
 ```
 
-### 3. フロントエンドの起動（http://localhost:5173）
+### 3. Start the frontend (http://localhost:5173)
 
 ```bash
 cd frontend
@@ -53,13 +53,13 @@ npm install
 npm run dev
 ```
 
-## API エンドポイント
+## API endpoints
 
-| メソッド | パス | 内容 |
+| Method | Path | Description |
 | --- | --- | --- |
-| GET | `/tasks` | タスク一覧取得 |
-| POST | `/tasks` | タスク追加 |
-| PUT | `/tasks/{task_id}` | タスク更新（完了切り替えなど） |
-| DELETE | `/tasks/{task_id}` | タスク削除 |
+| GET | `/tasks` | List tasks |
+| POST | `/tasks` | Create a task |
+| PUT | `/tasks/{task_id}` | Update a task (toggle completion, etc.) |
+| DELETE | `/tasks/{task_id}` | Delete a task |
 
 Swagger UI: http://localhost:8000/docs
