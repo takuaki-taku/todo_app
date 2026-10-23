@@ -1,78 +1,65 @@
 # Todo App
 
-A full-stack todo application built with React/TypeScript (frontend) and Python/FastAPI (backend).
+React + TypeScript (Vite) のフロントエンドと FastAPI のバックエンドで構築した、学習用のシンプルな Todo アプリです。
 
-## Overview
+## 構成
 
-This is a modern todo application that allows users to create, update, and delete tasks. The application features a clean and intuitive user interface with a robust backend API.
+```
+todo_app/
+├── backend/     # FastAPI + SQLAlchemy + MySQL
+│   ├── main.py        # APIエンドポイント
+│   ├── database.py    # DB接続（.env の DATABASE_URL を使用）
+│   ├── models.py      # tasks テーブル定義
+│   └── requirements.txt
+├── frontend/    # React + TypeScript (Vite)
+└── .env.example # 環境変数のサンプル
+```
 
-## Tech Stack
+## 機能
 
-- **Frontend:**
-  - React
-  - TypeScript
-  - Modern CSS
+- タスクの追加 / 一覧表示 / 完了切り替え / 削除（CRUD）
 
-- **Backend:**
-  - Python
-  - FastAPI
-  - MySQL
+## セットアップ
 
-## Features
+### 事前に必要なもの
 
-- Create, read, update, and delete todos
-- User authentication
-- Responsive design
-- RESTful API
+- Python 3.8 以上
+- Node.js
+- MySQL（`todo_app` データベースを作成しておくこと）
 
-## Setup
+```sql
+CREATE DATABASE todo_app;
+```
 
-### Prerequisites
-
-- Node.js (v14 or higher)
-- Python 3.8 or higher
-- MySQL
-
-### Backend Setup
+### 1. 環境変数の設定
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up environment variables
 cp .env.example .env
-# Edit .env with your database credentials
-
-# Run migrations
-alembic upgrade head
-
-# Start the server
-uvicorn main:app --reload
+# .env を編集して自分の MySQL 接続情報を設定
 ```
 
-### Frontend Setup
+### 2. バックエンドの起動（http://localhost:8000）
 
 ```bash
-# Install dependencies
-npm install
-
-# Start the development server
-npm start
+pip install -r backend/requirements.txt
+uvicorn backend.main:app --reload --env-file .env
 ```
 
-## Usage
+### 3. フロントエンドの起動（http://localhost:5173）
 
-1. Start the backend server (default: http://localhost:8000)
-2. Start the frontend development server (default: http://localhost:3000)
-3. Open your browser and navigate to http://localhost:3000
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## API Endpoints
+## API エンドポイント
 
-- `GET /todos` - Get all todos
-- `POST /todos` - Create a new todo
-- `PUT /todos/{id}` - Update a todo
-- `DELETE /todos/{id}` - Delete a todo
+| メソッド | パス | 内容 |
+| --- | --- | --- |
+| GET | `/tasks` | タスク一覧取得 |
+| POST | `/tasks` | タスク追加 |
+| PUT | `/tasks/{task_id}` | タスク更新（完了切り替えなど） |
+| DELETE | `/tasks/{task_id}` | タスク削除 |
 
-## License
-
-MIT License
+Swagger UI: http://localhost:8000/docs
