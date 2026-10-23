@@ -16,7 +16,7 @@ Thumbs.db
 node_modules/
 package-lock.json
 yarn.lock
-poetry.lock # if using poetry
+poetry.lock
 
 # Build artifacts
 dist/
@@ -34,7 +34,6 @@ __pycache__/
 # Database files
 *.db
 *.sqlite
-*.sql # unless you want to version control your schema
 
 # Environment variables
 .env
